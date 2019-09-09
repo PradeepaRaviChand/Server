@@ -35,7 +35,7 @@ public class FhcController {
 //	}
 
 	@ResponseBody @RequestMapping("/add_typeform_data")
-	public void addFormData(@RequestBody Map<String, Object> payload) { 
+	public String addFormData(@RequestBody Map<String, Object> payload) { 
 		
 		Map<String, Object> requestPayload = (Map<String, Object>) payload.get("payload");
 		int typeFormId = Integer.valueOf((String) requestPayload.get("id"));
@@ -60,6 +60,8 @@ public class FhcController {
         row.setStatus("status");
         row.setRequestPayload(requestPayload);
 		repo.save(row);
+		
+		return "Save successfully";
 		
 	}
 	
