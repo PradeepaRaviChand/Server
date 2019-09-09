@@ -1,5 +1,6 @@
 package com.kaleidofin.server.controller;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,10 +36,17 @@ public class FhcController {
 //	}
 
 	@ResponseBody @RequestMapping("/add_typeform_data")
-	public String addFormData(@RequestBody Map<String, Object> payload) { 
+	public void addFormData(@RequestBody Map<String, Object> payload) { 
 		
 		Map<String, Object> requestPayload = (Map<String, Object>) payload.get("payload");
 		int typeFormId = Integer.valueOf((String) requestPayload.get("id"));
+		
+		Map<String, Object> responsePayload = (Map<String, Object>) payload.get("response_payload");
+		System.out.println(responsePayload);
+		
+//		Map<String, Object> event_id = (Map<String, Object>) requestPayload.get("event_id");
+//		System.out.println(event_id);
+//		String eventId = event_id.toString();
 		
 		Map<String, Object> formResponse = (Map<String, Object>) requestPayload.get("form_response");
 		ArrayList arrlist = (ArrayList) formResponse.get("answers");
@@ -56,12 +64,11 @@ public class FhcController {
         row.setName(name);
         row.setEmail(email);
         row.setTypeFormId(typeFormId);
-        row.setSessionId("testId");
+        row.setSessionId("defaultSessionId");
         row.setStatus("status");
         row.setRequestPayload(requestPayload);
+        row.setResponsePayload(responsePayload);
 		repo.save(row);
-		
-		return "Save successfully";
 		
 	}
 	
@@ -70,11 +77,16 @@ public class FhcController {
 	    return repo.findAll();
 	}
 	
+	
+	
 	@GetMapping("/survey_result/{session_id}")
-	public List<Object[]> fetchSurveyResult(@PathVariable(value = "session_id") String sessionId) {
-		System.out.println(sessionId);
+	public Map<String, Object> fetchSurveyResult(@PathVariable(value = "session_id") String sessionId) {
+        List<Integer> l1 = new ArrayList<Integer>(); 
 		List<Object[]> row = repo.findBySessionId(sessionId);
-		return row; 
-		
+		Object[] data = row.get(0);
+		Map< String, Object> resData = new HashMap< String,Object>(); 
+		resData.put("response", data[0]);
+		resData.put("date", data[1]);
+		return resData; 
 	}
 }

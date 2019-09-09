@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FhcRepository extends JpaRepository<Fhc, Long> {
 	@Async
-    @Query(value = "SELECT response_payload FROM fhc_transaction", nativeQuery = true)
+    @Query(value = "SELECT response_payload,DATE_FORMAT(created_at ,'%M %d, %Y') FROM fhc_transaction", nativeQuery = true)
 	List<Object[]> findBySessionId(@Param("SessionId") String SessionId);
 
 }
