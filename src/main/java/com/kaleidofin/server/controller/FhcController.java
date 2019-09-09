@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.kaleidofin.server.exception.ResourceNotFoundException;
 import com.kaleidofin.server.model.Fhc;
 import com.kaleidofin.server.repository.FhcRepository;
 import com.vladmihalcea.hibernate.type.json.internal.JacksonUtil;
@@ -60,6 +61,11 @@ public class FhcController {
         row.setRequestPayload(requestPayload);
 		repo.save(row);
 		
+	}
+	
+	@GetMapping("/survey")
+	public List<Fhc> getAllFhc() {
+	    return repo.findAll();
 	}
 	
 	@GetMapping("/survey_result/{session_id}")
