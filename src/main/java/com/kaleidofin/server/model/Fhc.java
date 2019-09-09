@@ -54,10 +54,10 @@ public class Fhc {
 
     
 //    @Type(type = "json")
-    @Column(name="response_payload")
-    private String responsePayload;
+    @Column(columnDefinition = "json")
+    private Map<String, Object> responsePayload;
     
-//    @NotBlank
+    @NotBlank
     @Column(name="status")
     private String status;
     
@@ -115,11 +115,11 @@ public class Fhc {
         this.requestPayload = requestPayload2;
     }
     
-    public String getResponsePayload() {
+    public Map<String, Object> getResponsePayload() {
         return responsePayload;
     }
 
-    public void setResponsePayload(String responsePayload) {
+    public void setResponsePayload(Map<String, Object> responsePayload) {
         this.responsePayload = responsePayload;
     }
 
