@@ -67,7 +67,7 @@ public class FhcController {
         row.setSessionId("defaultSessionId");
         row.setStatus("status");
         row.setRequestPayload(requestPayload);
-        row.setResponsePayload(responsePayload);
+//        row.setResponsePayload(responsePayload);
 		repo.save(row);
 		
 	}
